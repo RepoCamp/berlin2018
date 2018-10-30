@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'hyrax', '2.3.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
@@ -30,6 +31,16 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'rsolr', '>= 1.0'
+gem 'jquery-rails'
+gem 'devise'
+gem 'devise-guests', '~> 0.6'
+gem 'riiif', '~> 1.1'
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -38,7 +49,12 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
+  gem 'database_cleaner'
+  gem 'fcrepo_wrapper'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'selenium-webdriver'
+  gem 'solr_wrapper', '>= 0.3'
 end
 
 group :development do
@@ -49,22 +65,3 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem 'hyrax', '2.3.3'
-group :development, :test do
-  gem 'solr_wrapper', '>= 0.3'
-end
-
-gem 'rsolr', '>= 1.0'
-gem 'jquery-rails'
-gem 'devise'
-gem 'devise-guests', '~> 0.6'
-group :development, :test do
-  gem 'fcrepo_wrapper'
-  gem 'rspec-rails'
-end
-
-gem 'riiif', '~> 1.1'
