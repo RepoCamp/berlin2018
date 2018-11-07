@@ -11,6 +11,8 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'active_fedora/cleaner'
 require 'database_cleaner'
+require 'factory_bot_rails'
+require 'ffaker'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

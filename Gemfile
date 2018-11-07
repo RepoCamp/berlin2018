@@ -6,7 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'hyrax', '2.3.3'
-
+gem 'hydra-role-management'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
 # Use sqlite3 as the database for Active Record
@@ -45,6 +45,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'factory_bot_rails'
+  gem 'ffaker'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
