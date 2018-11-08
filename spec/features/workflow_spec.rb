@@ -71,6 +71,20 @@ RSpec.feature 'Create a Image', js: false do
       expect(page).to have_content 'Deposit needs review'
       expect(page).to have_content "#{deposited_item.title.first} (#{deposited_item.id}) was deposited by #{depositor.display_name} and is awaiting initial review."
 
+      # The reviewer returns it to the depositor and asks for changes
+      subject = Hyrax::WorkflowActionInfo.new(deposited_item, reviewer)
+      sipity_workflow_action = PowerConverter.convert_to_sipity_action("request_changes", scope: subject.entity.workflow) { nil }
+      Hyrax::Workflow::WorkflowActionService.run(subject: subject, action: sipity_workflow_action, comment: nil)
+      expect(deposited_item.to_sipity_entity.reload.workflow_state_name).to eq "changes_required"
+
+      # The depositor makes the changes and re-submits it
+      logout
+      login_as depositor
+      subject = Hyrax::WorkflowActionInfo.new(deposited_item, depositor)
+      sipity_workflow_action = PowerConverter.convert_to_sipity_action("request_review", scope: subject.entity.workflow) { nil }
+      Hyrax::Workflow::WorkflowActionService.run(subject: subject, action: sipity_workflow_action, comment: nil)
+      expect(deposited_item.to_sipity_entity.reload.workflow_state_name).to eq "pending_review"
+
       # The reviewer marks it as reviewed
       subject = Hyrax::WorkflowActionInfo.new(deposited_item, reviewer)
       sipity_workflow_action = PowerConverter.convert_to_sipity_action("mark_as_reviewed", scope: subject.entity.workflow) { nil }
@@ -82,6 +96,26 @@ RSpec.feature 'Create a Image', js: false do
       login_as approver
       visit("/notifications")
       expect(page).to have_content "#{deposited_item.title.first} (#{deposited_item.id}) has completed initial review and is awaiting final approval."
+
+      # The approver returns it to the depositor and asks for changes
+      subject = Hyrax::WorkflowActionInfo.new(deposited_item, approver)
+      sipity_workflow_action = PowerConverter.convert_to_sipity_action("request_changes", scope: subject.entity.workflow) { nil }
+      Hyrax::Workflow::WorkflowActionService.run(subject: subject, action: sipity_workflow_action, comment: nil)
+      expect(deposited_item.to_sipity_entity.reload.workflow_state_name).to eq "changes_required"
+
+      # The depositor makes the changes and re-submits it
+      logout
+      login_as depositor
+      subject = Hyrax::WorkflowActionInfo.new(deposited_item, depositor)
+      sipity_workflow_action = PowerConverter.convert_to_sipity_action("request_review", scope: subject.entity.workflow) { nil }
+      Hyrax::Workflow::WorkflowActionService.run(subject: subject, action: sipity_workflow_action, comment: nil)
+      expect(deposited_item.to_sipity_entity.reload.workflow_state_name).to eq "pending_review"
+
+      # The reviewer marks it as reviewed (again!)
+      subject = Hyrax::WorkflowActionInfo.new(deposited_item, reviewer)
+      sipity_workflow_action = PowerConverter.convert_to_sipity_action("mark_as_reviewed", scope: subject.entity.workflow) { nil }
+      Hyrax::Workflow::WorkflowActionService.run(subject: subject, action: sipity_workflow_action, comment: nil)
+      expect(deposited_item.to_sipity_entity.reload.workflow_state_name).to eq "pending_approval"
 
       # The approving user marks the item as approved
       subject = Hyrax::WorkflowActionInfo.new(deposited_item, approver)
