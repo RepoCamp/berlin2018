@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/curationexperts/darlingtonia.git
+  revision: 31e603f1c0cb4d06958d3dcfd327793c24ce72c8
+  branch: hyrax_record_importer
+  specs:
+    darlingtonia (1.2.3)
+      active-fedora (>= 11.5.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -154,8 +162,6 @@ GEM
     connection_pool (2.2.2)
     crass (1.0.4)
     daemons (1.3.1)
-    darlingtonia (1.2.2)
-      active-fedora (>= 11.0, <= 12.99)
     database_cleaner (1.7.0)
     declarative (0.0.10)
     declarative-option (0.1.0)
@@ -767,7 +773,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
-  darlingtonia (~> 1.2)
+  darlingtonia!
   database_cleaner
   devise
   devise-guests (~> 0.6)

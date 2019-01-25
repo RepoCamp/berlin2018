@@ -7,10 +7,8 @@ class ModularImporter
   end
 
   def import
-    # start_time = Time.zone.now
-    # record_importer = ActorRecordImporter.new(error_stream: @error_stream, info_stream: @info_stream)
-    Darlingtonia::Importer.new(parser: Darlingtonia::CsvParser.new(file: File.open(@csv_file)), record_importer: Darlingtonia::RecordImporter.new).import
-    # end_time = Time.zone.now
-    # elapsed_time = end_time - start_time
+    file = File.open(@csv_file)
+    Darlingtonia::Importer.new(parser: Darlingtonia::CsvParser.new(file: file), record_importer: Darlingtonia::HyraxRecordImporter.new).import
+    file.close
   end
 end

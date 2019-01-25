@@ -27,11 +27,11 @@ RSpec.describe ModularImporter do
     expect(Image.where(source: 'https://www.pexels.com/photo/animal-blur-canine-close-up-551628/').count).to eq 1
   end
 
-  # it "creates publicly visible objects" do
-  #   ModularImporter.new(modular_csv).import
-  #   imported_image = Image.first
-  #   expect(imported_image.visibility).to eq 'open'
-  # end
+  it "creates publicly visible objects" do
+    ModularImporter.new(modular_csv).import
+    imported_image = Image.first
+    expect(imported_image.visibility).to eq 'open'
+  end
 
   # it "attaches a file" do
   #   ModularImporter.new(modular_csv).import
